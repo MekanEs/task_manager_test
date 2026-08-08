@@ -1,0 +1,36 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Настроить проект и React Router",
+      "description": "Инициализировать Vite, настроить роутинг для списка задач и страницы отдельной задачи.",
+      "status": "done",
+      "priority": "high",
+      "createdAt": "2023-10-25T10:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "title": "Реализовать API слой с TanStack Query",
+      "description": "Настроить мутации и запросы для CRUD операций с задачами.",
+      "status": "in_progress",
+      "priority": "high",
+      "createdAt": "2023-10-26T12:30:00.000Z"
+    },
+    {
+      "id": "3",
+      "title": "Сверстать карточку задачи",
+      "description": "Создать компонент карточки, отображающий статус, приоритет и название.",
+      "status": "todo",
+      "priority": "medium",
+      "createdAt": "2023-10-27T09:15:00.000Z"
+    },
+    {
+      "id": "4",
+      "title": "Добавить debounce для поиска",
+      "description": "Написать кастомный хук useDebounce для оптимизации запросов при вводе текста в поиск.",
+      "status": "todo",
+      "priority": "low",
+      "createdAt": "2023-10-27T14:20:00.000Z"
+    }
+  ]
+}
