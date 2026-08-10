@@ -5,8 +5,7 @@ import App from './App.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { TasksPage } from './pages/TasksPage.tsx';
-import { TaskDetailedPage } from './pages/TaskDetailedPage.tsx';
+import { TaskDetailedPageAsync as TaskDetailedPage, TasksPageAsync as TasksPage } from './pages';
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
 });

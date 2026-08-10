@@ -2,10 +2,10 @@
   "tasks": [
     {
       "id": "1",
-      "title": "Настроить проект и React Router",
-      "description": "Инициализировать Vite, настроить роутинг для списка задач и страницы отдельной задачи.",
+      "title": "Настроить проект и React Router2",
+      "description": "Инициализировать Vite, настроить роутинг для списка задач и страницы отдельной задачи.1",
       "status": "done",
-      "priority": "high",
+      "priority": "medium",
       "createdAt": "2023-10-25T10:00:00.000Z"
     },
     {
@@ -28,9 +28,25 @@
       "id": "4",
       "title": "Добавить debounce для поиска",
       "description": "Написать кастомный хук useDebounce для оптимизации запросов при вводе текста в поиск.",
-      "status": "todo",
+      "status": "in_progress",
       "priority": "low",
       "createdAt": "2023-10-27T14:20:00.000Z"
+    },
+    {
+      "title": "1",
+      "description": "222",
+      "priority": "medium",
+      "status": "todo",
+      "createdAt": "2026-08-10T11:13:38.435Z",
+      "id": "CBcIR3n"
+    },
+    {
+      "title": "ef",
+      "description": "f",
+      "priority": "medium",
+      "status": "todo",
+      "createdAt": "2026-08-10T11:55:28.761Z",
+      "id": "cbDXsie"
     }
   ]
 }
