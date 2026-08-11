@@ -4,16 +4,14 @@ import { createTask, updateTask } from '../api/tasks';
 import type { TaskFormValues } from './TaskForm';
 import { TaskForm } from './TaskForm';
 import type { TaskType } from '../types';
+import { useUpdateTaskMutation } from '../hooks/useMutations';
 
 interface TaskFormContainerProps {
   task?: TaskType;
   onSuccess?: () => void;
 }
 
-export const TaskFormContainer: React.FC<TaskFormContainerProps> = ({
-  task,
-  onSuccess,
-}) => {
+export const TaskFormContainer: React.FC<TaskFormContainerProps> = ({ task, onSuccess }) => {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
@@ -24,14 +22,7 @@ export const TaskFormContainer: React.FC<TaskFormContainerProps> = ({
     },
   });
 
-  const updateMutation = useMutation({
-    mutationFn: (data: TaskFormValues) => updateTask({ id: task!.id, data }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
-      queryClient.invalidateQueries({ queryKey: ['task', task!.id] });
-      onSuccess?.();
-    },
-  });
+  const updateMutation = useUpdateTaskMutation();
 
   const handleSubmit = (data: TaskFormValues) => {
     if (task) {

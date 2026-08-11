@@ -14,4 +14,5 @@ export type TaskFormData = Omit<TaskType, 'id' | 'createdAt'>;
 export interface GetTasksParams {
   status?: TaskStatus | 'all';
   search?: string;
+  page: number;
 }

@@ -1,8 +1,10 @@
 import { api } from './api';
 import type { TaskType, GetTasksParams, TaskFormData } from '../types';
 
-export const getTasks = async (params?: GetTasksParams): Promise<TaskType[]> => {
-  const queryParams: Record<string, string> = {};
+export const getTasks = async (
+  params?: GetTasksParams,
+): Promise<{ data: TaskType[]; total: number }> => {
+  const queryParams: Record<string, string | number> = { _limit: 5, _page: params?.page || 1 };
   if (params?.status && params.status !== 'all') {
     queryParams.status = params.status;
   }
@@ -10,7 +12,8 @@ export const getTasks = async (params?: GetTasksParams): Promise<TaskType[]> => 
     queryParams.title_like = params.search;
   }
   const response = await api.get<TaskType[]>('tasks', { params: queryParams });
-  return response.data;
+  const total = response.headers['x-total-count'] || 0;
+  return { data: response.data, total };
 };
 
 export const getTaskById = async (id: string): Promise<TaskType> => {

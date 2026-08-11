@@ -8,6 +8,7 @@ interface TaskFiltersProps {
   selectedStatus: TaskStatus | 'all';
   onStatusChange: (status: TaskStatus | 'all') => void;
   onCreateClick: () => void;
+  className?: string;
 }
 
 export const TaskFilters: React.FC<TaskFiltersProps> = ({
@@ -16,9 +17,12 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
   selectedStatus,
   onStatusChange,
   onCreateClick,
+  className,
 }) => {
   return (
-    <div className='flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6'>
+    <div
+      className={`flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 ${className}`}
+    >
       <div className='relative w-full md:w-80'>
         <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400' />
         <input

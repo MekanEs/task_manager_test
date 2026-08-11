@@ -6,12 +6,15 @@ import { ClipboardList } from 'lucide-react';
 interface TaskListProps {
   tasks?: TaskType[];
   onEdit: (task: TaskType) => void;
+  className?: string;
 }
 
-export const TaskList: React.FC<TaskListProps> = ({ tasks = [], onEdit }) => {
+export const TaskList: React.FC<TaskListProps> = ({ tasks = [], onEdit, className }) => {
   if (tasks.length === 0) {
     return (
-      <div className='flex flex-col items-center justify-center p-12 bg-white rounded-xl border border-gray-100 text-center shadow-sm'>
+      <div
+        className={`flex flex-col items-center justify-center p-12 bg-white rounded-xl border border-gray-100 text-center shadow-sm ${className}`}
+      >
         <div className='w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4'>
           <ClipboardList className='w-6 h-6' />
         </div>

@@ -4,6 +4,7 @@ import type { TaskType, TaskStatus } from '../types';
 import { Calendar, ArrowLeft, Edit, Trash2 } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateTask } from '../api/tasks';
+import { useUpdateTaskMutation } from '../hooks/useMutations';
 
 interface TaskDetailedProps {
   task?: TaskType;
@@ -14,14 +15,18 @@ interface TaskDetailedProps {
 export const TaskDetailed: FC<TaskDetailedProps> = ({ task, onEdit, onDelete }) => {
   const queryClient = useQueryClient();
 
-  const statusMutation = useMutation({
-    mutationFn: (newStatus: TaskStatus) => updateTask({ id: task!.id, data: { status: newStatus } }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
-      queryClient.invalidateQueries({ queryKey: ['task', task!.id] });
-    },
-  });
-
+  // const statusMutation = useMutation({
+  //   mutationFn: (newStatus: TaskStatus) =>
+  //     updateTask({ id: task!.id, data: { status: newStatus } }),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['tasks'] });
+  //     queryClient.invalidateQueries({ queryKey: ['task', task!.id] });
+  //   },
+  // });
+  const statusMutation = useUpdateTaskMutation();
+  const handleStatusChange = (status: TaskStatus) => {
+    statusMutation.mutate({ ...task, status });
+  };
   if (!task) {
     return (
       <div className='text-center py-12'>
@@ -91,7 +96,7 @@ export const TaskDetailed: FC<TaskDetailedProps> = ({ task, onEdit, onDelete }) 
       <div className='flex flex-wrap items-center gap-3 mb-4'>
         <select
           value={task.status}
-          onChange={(e) => statusMutation.mutate(e.target.value as TaskStatus)}
+          onChange={(e) => handleStatusChange(e.target.value as TaskStatus)}
           disabled={statusMutation.isPending}
           className={`text-xs font-semibold px-3 py-1.5 rounded-lg border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer ${
             statusColors[task.status]

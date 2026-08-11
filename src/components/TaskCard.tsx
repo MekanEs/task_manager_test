@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { Trash2, Edit, Calendar, ArrowUpRight } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateTask, deleteTask } from '../api/tasks';
+import { useUpdateTaskMutation } from '../hooks/useMutations';
 
 interface TaskCardProps {
   task: TaskType;
@@ -11,16 +12,21 @@ interface TaskCardProps {
 }
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
-  const { title, description, priority, status, id, createdAt } = task;
   const queryClient = useQueryClient();
+  const { title, description, priority, status, id, createdAt } =
+    queryClient.getQueryData<TaskType>(['task', task.id]) || task;
+  // const statusMutation = useMutation({
+  //   mutationFn: (newStatus: TaskStatus) => updateTask({ id, data: { status: newStatus } }),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['tasks'] });
+  //     queryClient.invalidateQueries({ queryKey: ['task', id] });
+  //   },
+  // });
+  const statusMutation = useUpdateTaskMutation();
 
-  const statusMutation = useMutation({
-    mutationFn: (newStatus: TaskStatus) => updateTask({ id, data: { status: newStatus } }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
-      queryClient.invalidateQueries({ queryKey: ['task', id] });
-    },
-  });
+  const handleStatusChange = (status: TaskStatus) => {
+    statusMutation.mutate({ ...task, status });
+  };
 
   const deleteMutation = useMutation({
     mutationFn: () => deleteTask(id),
@@ -89,7 +95,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
         <div className='flex items-center justify-between pt-3 border-t border-gray-100'>
           <select
             value={status}
-            onChange={(e) => statusMutation.mutate(e.target.value as TaskStatus)}
+            onChange={(e) => handleStatusChange(e.target.value as TaskStatus)}
             disabled={statusMutation.isPending}
             className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer ${
               statusColors[status]
